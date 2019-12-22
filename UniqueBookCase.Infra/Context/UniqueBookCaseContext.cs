@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UniqueBookCase.DomainModel.AuthorAggregate;
+using UniqueBookCase.Infra.Mappings;
 
 namespace UniqueBookCase.Infra.Context
 {
@@ -27,10 +28,8 @@ namespace UniqueBookCase.Infra.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            //modelBuilder.ApplyConfiguration(new MedicamentoMapping());
-            //modelBuilder.ApplyConfiguration(new SintomaMapping());
-            //modelBuilder.ApplyConfiguration(new MedicamentoSintomaMapping());
+            modelBuilder.ApplyConfiguration(new AuthorMapping());
+            modelBuilder.ApplyConfiguration(new BookMapping());
 
             base.OnModelCreating(modelBuilder);
         }
