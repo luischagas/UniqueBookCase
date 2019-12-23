@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using UniqueBookCase.Api.ViewModels;
@@ -21,7 +20,7 @@ namespace UniqueBookCase.Api.Controllers
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public BookController(IBookService bookService, IMapper mapper, ILogger logger)
+        public BookController(IBookService bookService, IMapper mapper, ILogger<BookController> logger)
         {
             _bookService = bookService;
             _mapper = mapper;
@@ -33,15 +32,15 @@ namespace UniqueBookCase.Api.Controllers
         {
             _logger.LogInformation("Executing api/Book -> GetAll");
 
-            return _mapper.Map<IEnumerable<BookViewModel>>(await _bookService.GetAllBooks());
+            return _mapper.Map<IEnumerable<BookViewModel>>(await _bookService.GetBooksAuthor());
         }
 
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id:guid}")]
         public async Task<ActionResult<BookViewModel>> Get(Guid id)
         {
             _logger.LogInformation("Executing api/Book -> Get");
 
-            var author = _mapper.Map<BookViewModel>(await _bookService.GetBook(id));
+            var author = _mapper.Map<BookViewModel>(await _bookService.GetBookAuthor(id));
 
             if (author == null) return NotFound();
 

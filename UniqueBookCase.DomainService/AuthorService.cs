@@ -30,9 +30,19 @@ namespace UniqueBookCase.DomainService
             return await _authorRepository.ReadAll();
         }
 
+        public async Task<IEnumerable<Author>> GetAuthorBooks()
+        {
+            return await _authorRepository.GetAuthorBooks();
+        }
+
         public async Task<Author> GetAuthor(Guid id)
         {
             return await _authorRepository.Read(id);
+        }
+
+        public async Task<Author> GetAuthorBook(Guid id)
+        {
+            return await _authorRepository.GetAuthorBook(id);
         }
 
         public async Task DeleteAuthor(Guid id)

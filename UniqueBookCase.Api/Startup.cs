@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +35,10 @@ namespace UniqueBookCase.Api
                 opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            //services.AddIdentityConfiguration(Configuration);
+
+            services.AddAutoMapper(typeof(Startup));
+
             services.ResolveDependencies();
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -46,6 +51,8 @@ namespace UniqueBookCase.Api
             {
                 app.UseHsts();
             }
+
+            //app.UseAuthentication();
 
             app.UseHttpsRedirection();
             app.UseMvc();

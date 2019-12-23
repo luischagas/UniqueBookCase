@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using UniqueBookCase.Api.ViewModels;
@@ -31,15 +32,15 @@ namespace UniqueBookCase.Api.Controllers
         {
             _logger.LogInformation("Executing api/Author -> GetAll");
 
-            return _mapper.Map<IEnumerable<AuthorViewModel>>(await _authorService.GetAllAuthors());
+            return _mapper.Map<IEnumerable<AuthorViewModel>>(await _authorService.GetAuthorBooks());
         }
 
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id:guid}")]
         public async Task<ActionResult<AuthorViewModel>> Get(Guid id)
         {
             _logger.LogInformation("Executing api/Author -> Get");
 
-            var author = _mapper.Map<AuthorViewModel>(await _authorService.GetAuthor(id));
+            var author = _mapper.Map<AuthorViewModel>(await _authorService.GetAuthorBook(id));
 
             if (author == null) return NotFound();
 
@@ -47,7 +48,7 @@ namespace UniqueBookCase.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<AuthorViewModel>> Post(AuthorViewModel authorViewModel)
+        public async Task<ActionResult<AuthorViewModel>> Post([FromBody] AuthorViewModel authorViewModel)
         {
             _logger.LogInformation("Executing api/Author -> Post");
 
@@ -59,7 +60,7 @@ namespace UniqueBookCase.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<AuthorViewModel>> Put(AuthorViewModel authorViewModel)
+        public async Task<ActionResult<AuthorViewModel>> Put([FromBody] AuthorViewModel authorViewModel)
         {
             _logger.LogInformation("Executing api/Author -> Put");
 
@@ -79,7 +80,6 @@ namespace UniqueBookCase.Api.Controllers
 
             return Ok();
         }
-
 
     }
 }

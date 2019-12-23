@@ -20,7 +20,9 @@ namespace UniqueBookCase.Api.ViewModels
         public string ISBN { get; set; }
 
         public string Category { get; set; }
+        public Guid AuthorId { get; set; }
 
-        public AuthorViewModel Author { get; set; }
+        public string AuthorName { get; set; }
+        
     }
 }
