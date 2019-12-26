@@ -6,6 +6,9 @@ namespace UniqueBookCase.DomainModel.CQRS.Commands.BookCommands
 {
     public class DeleteBookCommand : BookCommand
     {
+        public const string ConstQueueName = "delete-book-command-queue";
+        public override string QueueName => ConstQueueName;
+
         public DeleteBookCommand(Book book) : base(book)
         {
         }

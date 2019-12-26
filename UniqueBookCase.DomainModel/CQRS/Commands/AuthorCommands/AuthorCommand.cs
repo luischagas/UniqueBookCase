@@ -5,7 +5,7 @@ using UniqueBookCase.DomainModel.AuthorAggregate;
 
 namespace UniqueBookCase.DomainModel.CQRS.Commands.AuthorCommands
 {
-    public class AuthorCommand : Command
+    public abstract class AuthorCommand : Command
     {
         public Author Author { get; set; }
 

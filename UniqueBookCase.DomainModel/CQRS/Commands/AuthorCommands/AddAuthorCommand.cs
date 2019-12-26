@@ -5,6 +5,9 @@ namespace UniqueBookCase.DomainModel.CQRS.Commands.AuthorCommands
 {
     public class AddAuthorCommand : AuthorCommand
     {
+        public const string ConstQueueName = "add-author-command-queue";
+        public override string QueueName => ConstQueueName;
+
         public AddAuthorCommand(Author author) : base(author)
         {
         }

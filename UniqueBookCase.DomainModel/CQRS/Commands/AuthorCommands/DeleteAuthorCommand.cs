@@ -8,6 +8,9 @@ namespace UniqueBookCase.DomainModel.CQRS.Commands.AuthorCommands
 {
     public class DeleteAuthorCommand : AuthorCommand
     {
+        public const string ConstQueueName = "delete-author-command-queue";
+        public override string QueueName => ConstQueueName;
+
         public DeleteAuthorCommand(Author author) : base(author)
         {
         }

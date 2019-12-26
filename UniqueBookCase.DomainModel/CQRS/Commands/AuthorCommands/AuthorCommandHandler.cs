@@ -3,6 +3,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using UniqueBookCase.DomainModel.CQRS.Communication.Mediator;
+using UniqueBookCase.DomainModel.Interfaces.CQRS;
 using UniqueBookCase.DomainModel.Interfaces.Services;
 
 namespace UniqueBookCase.DomainModel.CQRS.Commands.AuthorCommands
@@ -13,18 +14,22 @@ namespace UniqueBookCase.DomainModel.CQRS.Commands.AuthorCommands
         IRequestHandler<DeleteAuthorCommand, bool>
     {
 
-        private readonly IAuthorCommands _authorService;
+        private readonly IAuthorCommands _authorCommands;
+        private readonly IQueue _queue;
 
-        public AuthorCommandHandler(IAuthorCommands authorService)
+        public AuthorCommandHandler(IAuthorCommands authorCommands, IQueue queue)
         {
-            _authorService = authorService;
+            _authorCommands = authorCommands;
+            _queue = queue;
         }
 
         public async Task<bool> Handle(AddAuthorCommand message, CancellationToken cancellationToken)
         {
             if (!ValidateCommand(message)) return false;
 
-             await _authorService.AddAuthor(message.Author);
+             await _authorCommands.AddAuthor(message.Author);
+
+            _queue.Enqueue(message);
 
             return true;
         }
@@ -33,7 +38,9 @@ namespace UniqueBookCase.DomainModel.CQRS.Commands.AuthorCommands
         {
             if (!ValidateCommand(message)) return false;
 
-            await _authorService.UpdateAuthor(message.Author);
+            await _authorCommands.UpdateAuthor(message.Author);
+
+            _queue.Enqueue(message);
 
             return true;
         }
@@ -42,7 +49,9 @@ namespace UniqueBookCase.DomainModel.CQRS.Commands.AuthorCommands
         {
             if (!ValidateCommand(message)) return false;
 
-            await _authorService.DeleteAuthor(message.Author.Id);
+            await _authorCommands.DeleteAuthor(message.Author.Id);
+
+            _queue.Enqueue(message);
 
             return true;
         }

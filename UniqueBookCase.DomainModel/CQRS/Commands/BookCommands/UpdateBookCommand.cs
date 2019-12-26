@@ -6,6 +6,8 @@ namespace UniqueBookCase.DomainModel.CQRS.Commands.BookCommands
 {
     public class UpdateBookCommand : BookCommand
     {
+        public const string ConstQueueName = "update-book-command-queue";
+        public override string QueueName => ConstQueueName;
         public UpdateBookCommand(Book book) : base(book)
         {
         }

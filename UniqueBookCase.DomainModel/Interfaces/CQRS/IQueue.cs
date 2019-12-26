@@ -8,7 +8,7 @@ namespace UniqueBookCase.DomainModel.Interfaces.CQRS
 {
     public interface IQueue
     {
-        Task EnqueueAsync(QueueMessage message);
-        Task<string> DequeueAsync(string queueName);
+        void Enqueue(QueueMessage message);
+        string Dequeue(string queueName);
     }
 }

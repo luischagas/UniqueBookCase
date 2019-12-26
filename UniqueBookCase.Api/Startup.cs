@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using UniqueBookCase.Api.Configuration;
+using UniqueBookCase.DomainModel;
 using UniqueBookCase.Infra.Context;
 
 namespace UniqueBookCase.Api
@@ -41,6 +42,8 @@ namespace UniqueBookCase.Api
             services.AddAutoMapper(typeof(DomainToViewModelMappingProfile), typeof(ViewModelToDomainMappingProfile));
 
             services.ResolveDependencies();
+
+            services.ConfigRabbitMQ(Configuration);
 
             services.AddMediatR(typeof(Startup));
         }
