@@ -21,6 +21,7 @@ namespace UniqueBookCase.Api.ViewModels
         [Required(ErrorMessage = "The field {0} is required")]
         public string ISBN { get; set; }
 
+        [Required(ErrorMessage = "The field {0} is required")]
         public string Category { get; set; }
         public Guid AuthorId { get; set; }
 

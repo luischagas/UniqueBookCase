@@ -7,24 +7,15 @@ using UniqueBookCase.DomainModel.Interfaces.Services;
 
 namespace UniqueBookCase.DomainService
 {
-    public class AuthorService : IAuthorService
+    public class AuthorQueries : IAuthorQueries
     {
         private IAuthorRepository _authorRepository;
 
-        public AuthorService(IAuthorRepository authorRepository)
+        public AuthorQueries(IAuthorRepository authorRepository)
         {
             _authorRepository = authorRepository;
         }
 
-        public async Task AddAuthor(Author author)
-        {
-            await _authorRepository.Create(author);
-        }
-        public async Task UpdateAuthor(Author author)
-        {
-            await _authorRepository.Update(author);
-        }
- 
         public async Task<IEnumerable<Author>> GetAllAuthors()
         {
             return await _authorRepository.ReadAll();
@@ -43,11 +34,6 @@ namespace UniqueBookCase.DomainService
         public async Task<Author> GetAuthorBook(Guid id)
         {
             return await _authorRepository.GetAuthorBook(id);
-        }
-
-        public async Task DeleteAuthor(Guid id)
-        {
-            await _authorRepository.Delete(id);
         }
 
     }

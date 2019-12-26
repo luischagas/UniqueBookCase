@@ -4,25 +4,17 @@ using System.Threading.Tasks;
 using UniqueBookCase.DomainModel.AuthorAggregate;
 using UniqueBookCase.DomainModel.Interfaces.Repositories;
 using UniqueBookCase.DomainModel.Interfaces.Services;
+using UniqueBookCase.DomainModel.Interfaces.UoW;
 
 namespace UniqueBookCase.DomainService
 {
-    public class BookService : IBookService
+    public class BookQueries : IBookQueries
     {
         private IBookRepository _bookRepository;
 
-        public BookService(IBookRepository bookRepository)
+        public BookQueries(IBookRepository bookRepository)
         {
             _bookRepository = bookRepository;
-        }
-
-        public async Task AddBook(Book book)
-        {
-            await _bookRepository.Create(book);
-        }
-        public async Task UpdateBook(Book book)
-        {
-            await _bookRepository.Update(book);
         }
 
         public async Task<IEnumerable<Book>> GetAllBooks()
@@ -43,11 +35,6 @@ namespace UniqueBookCase.DomainService
         public async Task<Book> GetBookAuthor(Guid id)
         {
             return await _bookRepository.GetBookAuthor(id);
-        }
-
-        public async Task DeleteBook(Guid id)
-        {
-            await _bookRepository.Delete(id);
         }
 
     }

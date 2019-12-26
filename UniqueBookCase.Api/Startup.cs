@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -37,9 +38,11 @@ namespace UniqueBookCase.Api
 
             //services.AddIdentityConfiguration(Configuration);
 
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(DomainToViewModelMappingProfile), typeof(ViewModelToDomainMappingProfile));
 
             services.ResolveDependencies();
+
+            services.AddMediatR(typeof(Startup));
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {

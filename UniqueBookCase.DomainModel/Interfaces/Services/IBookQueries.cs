@@ -5,14 +5,11 @@ using UniqueBookCase.DomainModel.AuthorAggregate;
 
 namespace UniqueBookCase.DomainModel.Interfaces.Services
 {
-    public interface IBookService
+    public interface IBookQueries
     {
         Task<Book> GetBook(Guid id);
         Task<Book> GetBookAuthor(Guid id);
         Task<IEnumerable<Book>> GetAllBooks();
         Task<IEnumerable<Book>> GetBooksAuthor();
-        Task AddBook(Book book);
-        Task UpdateBook(Book book);
-        Task DeleteBook(Guid id);
     }
 }

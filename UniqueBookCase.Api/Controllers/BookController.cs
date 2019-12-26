@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using UniqueBookCase.Api.ViewModels;
 using UniqueBookCase.DomainModel.AuthorAggregate;
+using UniqueBookCase.DomainModel.CQRS.Commands.BookCommands;
+using UniqueBookCase.DomainModel.CQRS.Communication.Mediator;
 using UniqueBookCase.DomainModel.Interfaces.Services;
 
 namespace UniqueBookCase.Api.Controllers
@@ -16,13 +18,15 @@ namespace UniqueBookCase.Api.Controllers
     public class BookController : ControllerBase
 
     {
-        private readonly IBookService _bookService;
+        private readonly IBookQueries _bookQueries;
+        private readonly IMediatorHandler _mediatorHandler;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public BookController(IBookService bookService, IMapper mapper, ILogger<BookController> logger)
+        public BookController(IBookQueries bookQueries, IMediatorHandler mediatorHandler, IMapper mapper, ILogger<BookController> logger)
         {
-            _bookService = bookService;
+            _bookQueries = bookQueries;
+            _mediatorHandler = mediatorHandler;
             _mapper = mapper;
             _logger = logger;
         }
@@ -32,7 +36,7 @@ namespace UniqueBookCase.Api.Controllers
         {
             _logger.LogInformation("Executing api/Book -> GetAll");
 
-            return _mapper.Map<IEnumerable<BookViewModel>>(await _bookService.GetBooksAuthor());
+            return _mapper.Map<IEnumerable<BookViewModel>>(await _bookQueries.GetBooksAuthor());
         }
 
         [HttpGet("{id:guid}")]
@@ -40,7 +44,7 @@ namespace UniqueBookCase.Api.Controllers
         {
             _logger.LogInformation("Executing api/Book -> Get");
 
-            var author = _mapper.Map<BookViewModel>(await _bookService.GetBookAuthor(id));
+            var author = _mapper.Map<BookViewModel>(await _bookQueries.GetBookAuthor(id));
 
             if (author == null) return NotFound();
 
@@ -54,29 +58,42 @@ namespace UniqueBookCase.Api.Controllers
 
             if (!ModelState.IsValid) return BadRequest();
 
-            await _bookService.AddBook(_mapper.Map<Book>(bookViewModel));
+            var command = _mapper.Map<AddBookCommand>(bookViewModel);
+            await _mediatorHandler.SendCommand(command);
 
-            return Ok(bookViewModel);
+            return Ok();
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<BookViewModel>> Put(BookViewModel bookViewModel)
+        [HttpPut("{id:guid}")]
+        public async Task<ActionResult<BookViewModel>> Put(Guid id, BookViewModel bookViewModel)
         {
             _logger.LogInformation("Executing api/Book -> Put");
 
+            if (id != bookViewModel.Id)
+            {
+                return BadRequest("The id entered is not the same as the one passed in the query.");
+            }
+
             if (!ModelState.IsValid) return BadRequest();
 
-            await _bookService.UpdateBook(_mapper.Map<Book>(bookViewModel));
+            var command = _mapper.Map<UpdateBookCommand>(bookViewModel);
+            await _mediatorHandler.SendCommand(command);
 
-            return Ok(bookViewModel);
+            return Ok();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<AuthorViewModel>> Delete(Guid id)
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult<AuthorViewModel>> Delete(Guid id, BookViewModel bookViewModel)
         {
             _logger.LogInformation("Executing api/Book -> Delete");
 
-            await _bookService.DeleteBook(id);
+            if (id != bookViewModel.Id)
+            {
+                return BadRequest("The id entered is not the same as the one passed in the query.");
+            }
+
+            var command = _mapper.Map<DeleteBookCommand>(bookViewModel);
+            await _mediatorHandler.SendCommand(command);
 
             return Ok();
         }

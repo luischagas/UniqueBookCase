@@ -32,24 +32,16 @@ namespace UniqueBookCase.Infra.Repository
         public virtual async Task Create(TEntity entity)
         {
             DbSet.Add(entity);
-            await SaveChanges();
         }
 
         public virtual async Task Update(TEntity entity)
         {
             DbSet.Update(entity);
-            await SaveChanges();
         }
 
         public virtual async Task Delete(Guid id)
         {
             DbSet.Remove(new TEntity { Id = id });
-            await SaveChanges();
-        }
-
-        public async Task<int> SaveChanges()
-        {
-            return await Db.SaveChangesAsync();
         }
 
         public void Dispose()
