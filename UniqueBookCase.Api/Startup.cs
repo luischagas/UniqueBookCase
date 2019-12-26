@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using UniqueBookCase.Api.Configuration;
 using UniqueBookCase.DomainModel;
 using UniqueBookCase.Infra.Context;
@@ -30,7 +31,12 @@ namespace UniqueBookCase.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.Configure<MvcJsonOptions>(config => { 
+                config.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        });
 
             services.AddDbContext<UniqueBookCaseContext>(opts =>
             {
@@ -42,8 +48,6 @@ namespace UniqueBookCase.Api
             services.AddAutoMapper(typeof(DomainToViewModelMappingProfile), typeof(ViewModelToDomainMappingProfile));
 
             services.ResolveDependencies();
-
-            services.ConfigRabbitMQ(Configuration);
 
             services.AddMediatR(typeof(Startup));
         }

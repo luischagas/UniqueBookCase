@@ -15,10 +15,11 @@ namespace UniqueBookCase.Infra.CQRS
         {
             var factory = new ConnectionFactory()
             {
-                HostName = "localhost",
-                Port = 15672,
-                UserName = "testes",
-                Password = "Testes2019!"
+                HostName = Properties.Resources.ResourceManager.GetString("HostnameRabbitMQ"),
+                Port = Convert.ToInt16(Properties.Resources.ResourceManager.GetString("PortRabbitMQ")),
+                UserName = Properties.Resources.ResourceManager.GetString("UsernameRabbitMQ"),
+                Password = Properties.Resources.ResourceManager.GetString("PasswordRabbitMQ"),
+                
             };
 
             using (var connection = factory.CreateConnection())

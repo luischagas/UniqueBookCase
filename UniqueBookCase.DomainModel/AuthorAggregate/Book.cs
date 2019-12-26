@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace UniqueBookCase.DomainModel.AuthorAggregate
 {
+    [JsonObject(IsReference = true)]
     public class Book : EntityBase
     {
         public string Title { get; set; }
