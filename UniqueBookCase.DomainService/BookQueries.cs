@@ -15,7 +15,7 @@ namespace UniqueBookCase.DomainService
     {
         private IBookRepository _bookRepository;
         private readonly IDistributedCache _cache;
-        private const string KEY_ALL_EMPLOYEES = "ALL_AUTHORS";
+        private const string KEY_ALL_AUTHORS = "ALL_AUTHORS";
 
         public BookQueries(IBookRepository bookRepository, IDistributedCache cache)
         {
@@ -30,7 +30,7 @@ namespace UniqueBookCase.DomainService
 
         public async Task<IEnumerable<Book>> GetBooksAuthor()
         {
-            var dataCache = await _cache.GetStringAsync(KEY_ALL_EMPLOYEES);
+            var dataCache = await _cache.GetStringAsync(KEY_ALL_AUTHORS);
 
             if (string.IsNullOrWhiteSpace(dataCache))
             {
@@ -50,7 +50,7 @@ namespace UniqueBookCase.DomainService
 
         public async Task<Book> GetBookAuthor(Guid id)
         {
-            var dataCache = await _cache.GetStringAsync(KEY_ALL_EMPLOYEES);
+            var dataCache = await _cache.GetStringAsync(KEY_ALL_AUTHORS);
 
             if (string.IsNullOrWhiteSpace(dataCache))
             {

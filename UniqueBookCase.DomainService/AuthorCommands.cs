@@ -15,7 +15,7 @@ namespace UniqueBookCase.DomainService
         private IAuthorRepository _authorRepository;
         private IUnitOfWork _unitOfWork;
         private readonly IDistributedCache _cache;
-        private const string KEY_ALL_EMPLOYEES = "ALL_AUTHORS";
+        private const string KEY_ALL_AUTHORS = "ALL_AUTHORS";
 
         public AuthorCommands(IAuthorRepository authorRepository, IUnitOfWork unitOfWork, IDistributedCache cache)
         {
@@ -57,7 +57,7 @@ namespace UniqueBookCase.DomainService
 
             var itemsJson = JsonConvert.SerializeObject(authorsFromDatabase);
 
-            await _cache.SetStringAsync(KEY_ALL_EMPLOYEES, itemsJson, cacheSettings);
+            await _cache.SetStringAsync(KEY_ALL_AUTHORS, itemsJson, cacheSettings);
         }
 
     }
