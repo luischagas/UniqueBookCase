@@ -31,6 +31,13 @@ namespace UniqueBookCase.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = Configuration.GetConnectionString("RedisConnection");
+                options.InstanceName = "Authors:";
+            });
+
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -43,7 +50,7 @@ namespace UniqueBookCase.Api
                 opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            //services.AddIdentityConfiguration(Configuration);
+            services.AddIdentityConfiguration(Configuration);
 
             services.AddAutoMapper(typeof(DomainToViewModelMappingProfile), typeof(ViewModelToDomainMappingProfile));
 
@@ -53,6 +60,8 @@ namespace UniqueBookCase.Api
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+                
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

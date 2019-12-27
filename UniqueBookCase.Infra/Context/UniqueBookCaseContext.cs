@@ -10,7 +10,7 @@ namespace UniqueBookCase.Infra.Context
         public DbSet<Author> Authors { get; set; }
         public DbSet<Book> Books { get; set; }
 
-        public UniqueBookCaseContext(DbContextOptions options) : base(options)
+        public UniqueBookCaseContext(DbContextOptions<UniqueBookCaseContext> options) : base(options)
         {
             if (!_Created)
             {

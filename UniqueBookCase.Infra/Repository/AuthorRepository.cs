@@ -15,14 +15,14 @@ namespace UniqueBookCase.Infra.Repository
 
         public async Task<IEnumerable<Author>> GetAuthorBooks()
         {
-            return await Db.Authors.AsNoTracking()
+            return await Db.Authors
                 .Include(c => c.Books)
                 .ToListAsync();
         }
 
         public async Task<Author> GetAuthorBook(Guid id)
         {
-            return await Db.Authors.AsNoTracking()
+            return await Db.Authors
                 .Include(c => c.Books)
                 .Where(a => a.Id == id)
                 .FirstOrDefaultAsync();
