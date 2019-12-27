@@ -12,10 +12,10 @@ namespace UniqueBookCase.DomainModel.CQRS.Commands.BookCommands
         IRequestHandler<DeleteBookCommand, bool>
     {
 
-        private readonly IBookCommands _bookCommands;
+        private readonly IBookService _bookCommands;
         private readonly IQueue _queue;
 
-        public BookCommandHandler(IBookCommands bookCommands, IQueue queue)
+        public BookCommandHandler(IBookService bookCommands, IQueue queue)
         {
             _bookCommands = bookCommands;
             _queue = queue;
@@ -25,8 +25,10 @@ namespace UniqueBookCase.DomainModel.CQRS.Commands.BookCommands
         {
             if (!ValidateCommand(message)) return false;
 
+            //Repository
             await _bookCommands.AddBook(message.Book);
 
+            //Queue
             _queue.Enqueue(message);
 
             return true;
@@ -36,8 +38,10 @@ namespace UniqueBookCase.DomainModel.CQRS.Commands.BookCommands
         {
             if (!ValidateCommand(message)) return false;
 
+            //Repository
             await _bookCommands.UpdateBook(message.Book);
 
+            //Queue
             _queue.Enqueue(message);
 
             return true;
@@ -47,8 +51,10 @@ namespace UniqueBookCase.DomainModel.CQRS.Commands.BookCommands
         {
             if (!ValidateCommand(message)) return false;
 
+            //Repository
             await _bookCommands.DeleteBook(message.Book.Id);
 
+            //Queue
             _queue.Enqueue(message);
 
             return true;

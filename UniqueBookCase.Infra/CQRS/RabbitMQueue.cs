@@ -44,7 +44,16 @@ namespace UniqueBookCase.Infra.CQRS
         public string Dequeue(string queueName)
         {
             string message = String.Empty;
-            var factory = new ConnectionFactory() { HostName = "localhost" };
+
+            var factory = new ConnectionFactory()
+            {
+                HostName = Properties.Resources.ResourceManager.GetString("HostnameRabbitMQ"),
+                Port = Convert.ToInt16(Properties.Resources.ResourceManager.GetString("PortRabbitMQ")),
+                UserName = Properties.Resources.ResourceManager.GetString("UsernameRabbitMQ"),
+                Password = Properties.Resources.ResourceManager.GetString("PasswordRabbitMQ"),
+
+            };
+
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {

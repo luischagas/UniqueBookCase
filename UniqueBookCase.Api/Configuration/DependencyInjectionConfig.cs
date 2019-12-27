@@ -21,24 +21,30 @@ namespace UniqueBookCase.Api.Configuration
         public static IServiceCollection ResolveDependencies(this IServiceCollection services)
         {
             services.AddScoped<UniqueBookCaseContext>();
+
+            // Unit Of Work
             services.AddScoped<IUnitOfWork, EntityFrameworkUnitOfWork>();
+
+            // RabbitMQ
             services.AddScoped<IQueue, RabbitMQueue>();
+
+            // Redis Cache
+            services.AddScoped<ICacheService, CacheService>();
+            services.AddScoped<ICacheRepository, CacheRepository>();
 
             // Mediator
             services.AddScoped<IMediatorHandler, MediatorHandler>();
 
             // Author
             services.AddScoped<IAuthorRepository, AuthorRepository>();
-            services.AddScoped<IAuthorCommands, AuthorCommands>();
-            services.AddScoped<IAuthorQueries, AuthorQueries>();
+            services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IRequestHandler<AddAuthorCommand, bool>, AuthorCommandHandler>();
             services.AddScoped<IRequestHandler<UpdateAuthorCommand, bool>, AuthorCommandHandler>();
             services.AddScoped<IRequestHandler<DeleteAuthorCommand, bool>, AuthorCommandHandler>();
 
             //Book
             services.AddScoped<IBookRepository, BookRepository>();
-            services.AddScoped<IBookCommands, BookCommands>();
-            services.AddScoped<IBookQueries, BookQueries>();
+            services.AddScoped<IBookService, BookService>();
             services.AddScoped<IRequestHandler<AddBookCommand, bool>, BookCommandHandler>();
             services.AddScoped<IRequestHandler<UpdateBookCommand, bool>, BookCommandHandler>();
             services.AddScoped<IRequestHandler<DeleteBookCommand, bool>, BookCommandHandler>();

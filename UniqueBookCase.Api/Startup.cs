@@ -27,7 +27,6 @@ namespace UniqueBookCase.Api
             services.AddDistributedRedisCache(options =>
             {
                 options.Configuration = Configuration.GetConnectionString("RedisConnection");
-                options.InstanceName = "Authors:";
             });
 
             services.AddMvc()

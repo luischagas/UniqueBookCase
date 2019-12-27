@@ -14,20 +14,20 @@ using UniqueBookCase.DomainModel.Interfaces.Services;
 
 namespace UniqueBookCase.Api.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BookController : ControllerBase
 
     {
-        private readonly IBookQueries _bookQueries;
+        private readonly IBookService _bookService;
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public BookController(IBookQueries bookQueries, IMediatorHandler mediatorHandler, IMapper mapper, ILogger<BookController> logger)
+        public BookController(IBookService bookService, IMediatorHandler mediatorHandler, IMapper mapper, ILogger<BookController> logger)
         {
-            _bookQueries = bookQueries;
+            _bookService = bookService;
             _mediatorHandler = mediatorHandler;
             _mapper = mapper;
             _logger = logger;
@@ -38,7 +38,7 @@ namespace UniqueBookCase.Api.Controllers
         {
             _logger.LogInformation("Executing api/Book -> GetAll");
 
-            return _mapper.Map<IEnumerable<BookViewModel>>(await _bookQueries.GetBooksAuthor());
+            return _mapper.Map<IEnumerable<BookViewModel>>(await _bookService.GetBooksAuthor());
         }
 
         [HttpGet("{id:guid}")]
@@ -46,14 +46,14 @@ namespace UniqueBookCase.Api.Controllers
         {
             _logger.LogInformation("Executing api/Book -> Get");
 
-            var author = _mapper.Map<BookViewModel>(await _bookQueries.GetBookAuthor(id));
+            var author = _mapper.Map<BookViewModel>(await _bookService.GetBookAuthor(id));
 
             if (author == null) return NotFound();
 
             return author;
         }
 
-        [ClaimsAuthorize("Book", "Add")]
+        //[ClaimsAuthorize("Book", "Add")]
         [HttpPost]
         public async Task<ActionResult<AuthorViewModel>> Post(BookViewModel bookViewModel)
         {
@@ -67,7 +67,7 @@ namespace UniqueBookCase.Api.Controllers
             return Ok();
         }
 
-        [ClaimsAuthorize("Book", "Edit")]
+        //[ClaimsAuthorize("Book", "Edit")]
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<BookViewModel>> Put(Guid id, BookViewModel bookViewModel)
         {
@@ -87,7 +87,7 @@ namespace UniqueBookCase.Api.Controllers
         }
 
 
-        [ClaimsAuthorize("Book", "Delete")]
+        //[ClaimsAuthorize("Book", "Delete")]
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<AuthorViewModel>> Delete(Guid id, BookViewModel bookViewModel)
         {

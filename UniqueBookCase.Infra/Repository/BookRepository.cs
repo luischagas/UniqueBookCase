@@ -11,46 +11,70 @@ namespace UniqueBookCase.Infra.Repository
 {
    public class BookRepository : Repository<Book>, IBookRepository
     {
-        public BookRepository(UniqueBookCaseContext context) : base(context) { }
+        private readonly ICacheRepository _cache;
+        private readonly IAuthorRepository _authorRepository;
+        private const string key_author = "Author:{id}";
+
+        public BookRepository(UniqueBookCaseContext context, ICacheRepository cache, IAuthorRepository authorRepository) : base(context) {
+            _cache = cache;
+            _authorRepository = authorRepository;
+        }
 
         public async Task<IEnumerable<Book>> GetBooksAuthor()
         {
-            return await Db.Books
+            string key;
+
+            var books = await Db.Books
                 .Include(c => c.Author)
                 .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Book>> GetBooksAuthorFromCache(IEnumerable<Author> authors)
-        {
-            var books = Db.Books;
 
             foreach (Book item in books)
             {
-                item.Author = authors.Where(a => a.Id == item.AuthorId).FirstOrDefault();
+                key = key_author.Replace("{id}", item.AuthorId.ToString());
+
+                var author = await _cache.Get<Author>(key);
+
+                if (author != null)
+                {
+                  item.Author = author;
+                } else 
+                {
+                  item.Author = await _authorRepository.Read(item.AuthorId);
+
+                  await _cache.Save(item.Author, key);
+                }
             }
 
-            return await books.ToListAsync();
+            return books;
 
         }
-
         public async Task<Book> GetBookAuthor(Guid id)
         {
-            return await Db.Books
-                .Include(c => c.Author)
-                .Where(a => a.Id == id)
-                .FirstOrDefaultAsync();
-        }
+            string key;
 
-        public async Task<Book> GetBookAuthorFromCache(Guid id, IEnumerable<Author> authors)
-        {
             var book = await Db.Books
                 .Where(a => a.Id == id)
                 .FirstOrDefaultAsync();
 
-            book.Author = authors.Where(a => a.Id == book.AuthorId).FirstOrDefault();
+            key = key_author.Replace("{id}", book.AuthorId.ToString());
+
+            var author = await _cache.Get<Author>(key);
+
+            if (author != null)
+            {
+                book.Author = author;
+            }
+            else
+            {
+                book.Author = await _authorRepository.Read(book.AuthorId);
+
+                await _cache.Save(book.Author, key);
+            }
 
             return book;
 
         }
+
+    
     }
 }
