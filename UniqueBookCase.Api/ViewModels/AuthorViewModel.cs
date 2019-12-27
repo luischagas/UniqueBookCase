@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using UniqueBookCase.Api.Extension;
+using UniqueBookCase.Api.Extensions;
 
 namespace UniqueBookCase.Api.ViewModels
 {

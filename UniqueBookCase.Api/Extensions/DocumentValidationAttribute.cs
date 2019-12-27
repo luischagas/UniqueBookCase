@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace UniqueBookCase.Api.Extension
+namespace UniqueBookCase.Api.Extensions
 {
     public class DocumentValidationAttribute : ValidationAttribute
     {

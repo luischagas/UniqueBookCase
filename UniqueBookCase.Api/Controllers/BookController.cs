@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using UniqueBookCase.Api.Extensions;
 using UniqueBookCase.Api.ViewModels;
 using UniqueBookCase.DomainModel.AuthorAggregate;
 using UniqueBookCase.DomainModel.CQRS.Commands.BookCommands;
@@ -13,6 +14,7 @@ using UniqueBookCase.DomainModel.Interfaces.Services;
 
 namespace UniqueBookCase.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BookController : ControllerBase
@@ -51,6 +53,7 @@ namespace UniqueBookCase.Api.Controllers
             return author;
         }
 
+        [ClaimsAuthorize("Book", "Add")]
         [HttpPost]
         public async Task<ActionResult<AuthorViewModel>> Post(BookViewModel bookViewModel)
         {
@@ -64,6 +67,7 @@ namespace UniqueBookCase.Api.Controllers
             return Ok();
         }
 
+        [ClaimsAuthorize("Book", "Edit")]
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<BookViewModel>> Put(Guid id, BookViewModel bookViewModel)
         {
@@ -82,6 +86,8 @@ namespace UniqueBookCase.Api.Controllers
             return Ok();
         }
 
+
+        [ClaimsAuthorize("Book", "Delete")]
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<AuthorViewModel>> Delete(Guid id, BookViewModel bookViewModel)
         {

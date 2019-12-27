@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using UniqueBookCase.Api.Extension;
+using UniqueBookCase.Api.Extensions;
 
 namespace UniqueBookCase.Api.ViewModels
 {
@@ -17,7 +14,7 @@ namespace UniqueBookCase.Api.ViewModels
         public string Title { get; set; }
         public DateTime ReleaseDate { get; set; }
 
-        [UniqueIdentificatorAttribute(ErrorMessage = "The field {0} is invalid.")]
+        [UniqueIdentificator(ErrorMessage = "The field {0} is invalid.")]
         [Required(ErrorMessage = "The field {0} is required")]
         public string ISBN { get; set; }
 
