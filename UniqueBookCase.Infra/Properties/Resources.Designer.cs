@@ -61,7 +61,7 @@ namespace UniqueBookCase.Infra.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 192.168.2.105.
+        ///   Looks up a localized string similar to localhost.
         /// </summary>
         internal static string HostnameRabbitMQ {
             get {
