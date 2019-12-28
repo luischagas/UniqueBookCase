@@ -32,7 +32,7 @@ namespace UniqueBookCase.Api.Controllers
         }
 
         [HttpPost("new-account")]
-        public async Task<ActionResult> Register(RegisterUserViewModel registerUser)
+        public async Task<ActionResult> Register([FromBody]RegisterUserViewModel registerUser)
         {
             if (!ModelState.IsValid) return BadRequest();
 
@@ -58,7 +58,7 @@ namespace UniqueBookCase.Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult> Login(LoginUserViewModel loginUser)
+        public async Task<ActionResult> Login([FromBody]LoginUserViewModel loginUser)
         {
             if (!ModelState.IsValid) return BadRequest();
 

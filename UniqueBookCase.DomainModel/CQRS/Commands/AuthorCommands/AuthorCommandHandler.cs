@@ -1,9 +1,6 @@
 ﻿using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
-using UniqueBookCase.DomainModel.AuthorAggregate;
-using UniqueBookCase.DomainModel.CQRS.Communication.Mediator;
 using UniqueBookCase.DomainModel.Interfaces.CQRS;
 using UniqueBookCase.DomainModel.Interfaces.Services;
 

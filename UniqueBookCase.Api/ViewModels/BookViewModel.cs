@@ -20,9 +20,7 @@ namespace UniqueBookCase.Api.ViewModels
 
         [Required(ErrorMessage = "The field {0} is required")]
         public string Category { get; set; }
-        public Guid AuthorId { get; set; }
+        public AuthorViewModel Author { get; set; }
 
-        public string AuthorName { get; set; }
-        
     }
 }

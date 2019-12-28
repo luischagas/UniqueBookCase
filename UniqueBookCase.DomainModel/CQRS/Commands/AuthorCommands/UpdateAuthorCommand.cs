@@ -1,7 +1,5 @@
 ﻿using FluentValidation;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using UniqueBookCase.DomainModel.AuthorAggregate;
 
 namespace UniqueBookCase.DomainModel.CQRS.Commands.AuthorCommands

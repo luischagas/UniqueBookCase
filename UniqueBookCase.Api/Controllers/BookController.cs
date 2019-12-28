@@ -5,16 +5,14 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using UniqueBookCase.Api.Extensions;
 using UniqueBookCase.Api.ViewModels;
-using UniqueBookCase.DomainModel.AuthorAggregate;
 using UniqueBookCase.DomainModel.CQRS.Commands.BookCommands;
 using UniqueBookCase.DomainModel.CQRS.Communication.Mediator;
 using UniqueBookCase.DomainModel.Interfaces.Services;
 
 namespace UniqueBookCase.Api.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BookController : ControllerBase
@@ -53,21 +51,15 @@ namespace UniqueBookCase.Api.Controllers
             return author;
         }
 
-        //[ClaimsAuthorize("Book", "Add")]
         [HttpPost]
-        public async Task<ActionResult<AuthorViewModel>> Post(BookViewModel bookViewModel)
+        public ActionResult<AuthorViewModel> Post()
         {
             _logger.LogInformation("Executing api/Book -> Post");
 
-            if (!ModelState.IsValid) return BadRequest();
+            return BadRequest("Cannot insert book without author");
 
-            var command = _mapper.Map<AddBookCommand>(bookViewModel);
-            await _mediatorHandler.SendCommand(command);
-
-            return Ok();
         }
 
-        //[ClaimsAuthorize("Book", "Edit")]
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<BookViewModel>> Put(Guid id, BookViewModel bookViewModel)
         {
@@ -80,14 +72,19 @@ namespace UniqueBookCase.Api.Controllers
 
             if (!ModelState.IsValid) return BadRequest();
 
-            var command = _mapper.Map<UpdateBookCommand>(bookViewModel);
+            var bookUpdate = _mapper.Map<BookViewModel>(await _bookService.GetBookAuthor(id));
+
+            bookUpdate.Title = bookViewModel.Title;
+            bookUpdate.ReleaseDate = bookViewModel.ReleaseDate;
+            bookUpdate.ISBN = bookViewModel.ISBN;
+            bookUpdate.Category = bookViewModel.Category;
+
+            var command = _mapper.Map<UpdateBookCommand>(bookUpdate);
             await _mediatorHandler.SendCommand(command);
 
             return Ok();
         }
 
-
-        //[ClaimsAuthorize("Book", "Delete")]
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<AuthorViewModel>> Delete(Guid id, BookViewModel bookViewModel)
         {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace UniqueBookCase.Api.Extensions
+﻿namespace UniqueBookCase.Api.Extensions
 {
     public class AppSettings
     {

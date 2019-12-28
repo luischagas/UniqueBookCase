@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using UniqueBookCase.Api.ViewModels;
 using UniqueBookCase.DomainModel.AuthorAggregate;
-using UniqueBookCase.DomainModel.CQRS.Commands;
 using UniqueBookCase.DomainModel.CQRS.Commands.AuthorCommands;
 using UniqueBookCase.DomainModel.CQRS.Commands.BookCommands;
 

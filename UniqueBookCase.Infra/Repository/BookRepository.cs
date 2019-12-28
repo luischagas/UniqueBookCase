@@ -24,7 +24,7 @@ namespace UniqueBookCase.Infra.Repository
         {
             string key;
 
-            var books = await Db.Books
+            var books = await Db.Books.AsNoTracking()
                 .Include(c => c.Author)
                 .ToListAsync();
 
@@ -52,7 +52,7 @@ namespace UniqueBookCase.Infra.Repository
         {
             string key;
 
-            var book = await Db.Books
+            var book = await Db.Books.AsNoTracking()
                 .Where(a => a.Id == id)
                 .FirstOrDefaultAsync();
 
