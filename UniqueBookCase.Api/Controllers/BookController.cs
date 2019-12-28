@@ -12,6 +12,7 @@ using UniqueBookCase.DomainModel.Interfaces.Services;
 
 namespace UniqueBookCase.Api.Controllers
 {
+    [ApiVersion("1.0")]
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -31,6 +32,7 @@ namespace UniqueBookCase.Api.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IEnumerable<BookViewModel>> GetAll()
         {
@@ -39,6 +41,7 @@ namespace UniqueBookCase.Api.Controllers
             return _mapper.Map<IEnumerable<BookViewModel>>(await _bookService.GetBooksAuthor());
         }
 
+        [AllowAnonymous]
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<BookViewModel>> Get(Guid id)
         {

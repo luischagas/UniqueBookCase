@@ -14,7 +14,9 @@ using UniqueBookCase.Api.ViewModels;
 
 namespace UniqueBookCase.Api.Controllers
 {
+    [ApiVersion("1.0")]
     [Route("api/account")]
+    [ApiController]
     public class AuthController : ControllerBase
     {
 

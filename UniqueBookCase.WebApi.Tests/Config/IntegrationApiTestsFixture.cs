@@ -43,8 +43,8 @@ namespace UniqueBookCase.WebApi.Tests.Config
         {
             var userData = new LoginUserViewModel
             {
-                Email = "lfchagas1@gmail.com",
-                Password = "Teste@123"
+                Email = "teste@gmail.com",
+                Password = "Teste#2019"
             };
 
             Client = Factory.CreateClient();

@@ -70,7 +70,7 @@ namespace UniqueBookCase.Infra.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Testes2019!.
+        ///   Looks up a localized string similar to Rabbitmq2019!.
         /// </summary>
         internal static string PasswordRabbitMQ {
             get {
@@ -88,7 +88,7 @@ namespace UniqueBookCase.Infra.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to teste.
+        ///   Looks up a localized string similar to rabbitmq.
         /// </summary>
         internal static string UsernameRabbitMQ {
             get {

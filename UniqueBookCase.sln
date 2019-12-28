@@ -19,7 +19,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniqueBookCase.Api", "Uniqu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_IntegrationTests", "_IntegrationTests", "{1690226E-C764-4AE1-929D-B39572F5FCCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniqueBookCase.WebApi.Tests", "UniqueBookCase.WebApi.Tests\UniqueBookCase.WebApi.Tests.csproj", "{F5E75814-16EE-425D-8267-CF4B9382DD37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniqueBookCase.WebApi.Tests", "UniqueBookCase.WebApi.Tests\UniqueBookCase.WebApi.Tests.csproj", "{F5E75814-16EE-425D-8267-CF4B9382DD37}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Sql", "_Sql", "{62C75487-37F7-4620-B946-8027DC714A66}"
+	ProjectSection(SolutionItems) = preProject
+		\\Mac\Home\Desktop\IdentityMigrationSQL.sql = \\Mac\Home\Desktop\IdentityMigrationSQL.sql
+		\\Mac\Home\Desktop\InitialMigrationSQL.sql = \\Mac\Home\Desktop\InitialMigrationSQL.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

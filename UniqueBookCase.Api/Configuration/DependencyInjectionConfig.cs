@@ -1,5 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using UniqueBookCase.DomainModel.CQRS.Commands;
 using UniqueBookCase.DomainModel.CQRS.Commands.AuthorCommands;
 using UniqueBookCase.DomainModel.CQRS.Commands.BookCommands;
@@ -31,6 +33,9 @@ namespace UniqueBookCase.Api.Configuration
             // Redis Cache
             services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<ICacheRepository, CacheRepository>();
+
+            //Swagger
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
             // Mediator
             services.AddScoped<IMediatorHandler, MediatorHandler>();

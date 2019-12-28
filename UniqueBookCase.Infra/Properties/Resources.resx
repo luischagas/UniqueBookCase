@@ -121,12 +121,12 @@
     <value>192.168.2.105</value>
   </data>
   <data name="PasswordRabbitMQ" xml:space="preserve">
-    <value>Testes2019!</value>
+    <value>Rabbitmq2019!</value>
   </data>
   <data name="PortRabbitMQ" xml:space="preserve">
     <value>5672</value>
   </data>
   <data name="UsernameRabbitMQ" xml:space="preserve">
-    <value>teste</value>
+    <value>rabbitmq</value>
   </data>
 </root>

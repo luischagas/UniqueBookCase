@@ -10,8 +10,8 @@ using UniqueBookCase.Infra.Context;
 namespace UniqueBookCase.Infra.Migrations
 {
     [DbContext(typeof(UniqueBookCaseContext))]
-    [Migration("20191223004112_Initial")]
-    partial class Initial
+    [Migration("20191228051345_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

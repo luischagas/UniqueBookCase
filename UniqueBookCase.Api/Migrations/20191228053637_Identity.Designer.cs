@@ -10,7 +10,7 @@ using UniqueBookCase.Api.Data;
 namespace UniqueBookCase.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191226183159_Identity")]
+    [Migration("20191228053637_Identity")]
     partial class Identity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
