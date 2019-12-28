@@ -83,16 +83,13 @@ namespace UniqueBookCase.Api.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<ActionResult<AuthorViewModel>> Delete(Guid id, AuthorViewModel authorViewModel)
+        public async Task<ActionResult<AuthorViewModel>> Delete(Guid id)
         {
             _logger.LogInformation("Executing api/Author -> Delete");
 
-            if (id != authorViewModel.Id)
-            {
-                return BadRequest("The id entered is not the same as the one passed in the query.");
-            }
+            var author = _mapper.Map<AuthorViewModel>(await _authorService.GetAuthor(id));
 
-            var command = _mapper.Map<DeleteAuthorCommand>(authorViewModel);
+            var command = _mapper.Map<DeleteAuthorCommand>(author);
             await _mediatorHandler.SendCommand(command);
 
             return Ok();

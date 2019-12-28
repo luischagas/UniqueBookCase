@@ -22,18 +22,18 @@ namespace UniqueBookCase.DomainService
 
         public async Task AddAuthor(Author author)
         {
-            await _authorRepository.Create(author);
+            _authorRepository.Create(author);
             await _unitOfWork.CommitAsync();
         }
         public async Task UpdateAuthor(Author author)
         {
-            await _authorRepository.Update(author);
+            _authorRepository.Update(author);
             await _unitOfWork.CommitAsync();
         }
 
         public async Task DeleteAuthor(Guid id)
         {
-            await _authorRepository.Delete(id);
+            _authorRepository.Delete(id);
             await _unitOfWork.CommitAsync();
         }
 

@@ -44,15 +44,15 @@ namespace UniqueBookCase.Api.Controllers
         {
             _logger.LogInformation("Executing api/Book -> Get");
 
-            var author = _mapper.Map<BookViewModel>(await _bookService.GetBookAuthor(id));
+            var book = _mapper.Map<BookViewModel>(await _bookService.GetBookAuthor(id));
 
-            if (author == null) return NotFound();
+            if (book == null) return NotFound();
 
-            return author;
+            return book;
         }
 
         [HttpPost]
-        public ActionResult<AuthorViewModel> Post()
+        public ActionResult<BookViewModel> Post()
         {
             _logger.LogInformation("Executing api/Book -> Post");
 
@@ -86,16 +86,13 @@ namespace UniqueBookCase.Api.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<ActionResult<AuthorViewModel>> Delete(Guid id, BookViewModel bookViewModel)
+        public async Task<ActionResult<BookViewModel>> Delete(Guid id)
         {
             _logger.LogInformation("Executing api/Book -> Delete");
 
-            if (id != bookViewModel.Id)
-            {
-                return BadRequest("The id entered is not the same as the one passed in the query.");
-            }
+            var book = _mapper.Map<BookViewModel>(await _bookService.GetBook(id));
 
-            var command = _mapper.Map<DeleteBookCommand>(bookViewModel);
+            var command = _mapper.Map<DeleteBookCommand>(book);
             await _mediatorHandler.SendCommand(command);
 
             return Ok();

@@ -13,30 +13,27 @@ namespace UniqueBookCase.DomainService
     {
         private IBookRepository _bookRepository;
         private IUnitOfWork _unitOfWork;
-        private readonly IDistributedCache _cache;
-        private const string KEY_ALL_AUTHORS = "ALL_AUTHORS";
 
-        public BookService(IBookRepository bookRepository, IUnitOfWork unitOfWork, IDistributedCache cache)
+        public BookService(IBookRepository bookRepository, IUnitOfWork unitOfWork)
         {
             _bookRepository = bookRepository;
             _unitOfWork = unitOfWork;
-            _cache = cache;
         }
 
         public async Task AddBook(Book book)
         {
-            await _bookRepository.Create(book);
+            _bookRepository.Create(book);
             await _unitOfWork.CommitAsync();
         }
         public async Task UpdateBook(Book book)
         {
-            await _bookRepository.Update(book);
+            _bookRepository.Update(book);
             await _unitOfWork.CommitAsync();
         }
 
         public async Task DeleteBook(Guid id)
         {
-            await _bookRepository.Delete(id);
+            _bookRepository.Delete(id);
             await _unitOfWork.CommitAsync();
         }
 
